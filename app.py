@@ -26,10 +26,7 @@ AR00010: https://docs.google.com/spreadsheets/d/1ZIJvGLH2JJE3Dzgy7k_T5Rq6KZvEFLU
 AR00011: https://docs.google.com/spreadsheets/d/1lAEVTw7cCBORKM06rgRe7oQqQpwfOahq9IXWuBZgS0U/edit?usp=sharing
 AR00012: https://docs.google.com/spreadsheets/d/1wbFDNgSbCiM1Oju-cGBE_JwxrGk7zEqzmgGCokQWaFg/edit?usp=sharing
 AR00013 Support: https://docs.google.com/spreadsheets/d/1Hxv21V5wx8inlGofql9xNs8uaxkTd5u511bWjML--Zk/edit?usp=sharing
-AR00013_EST: https://docs.google.com/spreadsheets/d/1balavhHv8w7Dx_CV2JUUIT778yGKncML5UnkSycTXEU/edit?usp=sharing
-AR00013_MST: https://docs.google.com/spreadsheets/d/1uFsD33lMZzM433lONEyU9CjGO0fOsiVRUpudEMVnMOs/edit?usp=sharing
-AR00013_PST: https://docs.google.com/spreadsheets/d/1wDMUxo0ZGEE9pl_aKall56LAn5iVdK0xxHncYxAwqcg/edit?usp=sharing
-AR00013_CST: https://docs.google.com/spreadsheets/d/1YiJ0WSDdUYwne5i136WXxr4wqIMsRVHdVe5tcg3qCVs/edit?usp=sharing
+AR00013: https://docs.google.com/spreadsheets/d/1sMcmEHvpkkRf7mFJOOOq3DuscKT8aPwDOy9GyQqAoxs/edit?gid=0#gid=0
 AR00015: https://docs.google.com/spreadsheets/d/1zbkf8iV9r2ZZAoSKAsSZh41C50kRXFgVZb3EMj52QLE/edit?usp=sharing
 AR00016: https://docs.google.com/spreadsheets/d/1Rx23fqiUImvmITDHItIkp_3EGJM0deJm5-DJ1bT49Dg/edit?usp=sharing
 AR00019: https://docs.google.com/spreadsheets/d/1a7u-NcsVtSS1agNF7K9MTEY3k54sTk9hu0j-Fdru07Y/edit?usp=sharing
@@ -40,12 +37,22 @@ AR00028: https://docs.google.com/spreadsheets/d/16wJOdiCuTg0JlIf1qE_nNZgn4QJBBTE
 AR00029: https://docs.google.com/spreadsheets/d/1CQCQDoTJjxYNlJjuwqpRHeitTUpgnFIE2cxTIGJrA5A/edit?usp=sharing
 AR00030: https://docs.google.com/spreadsheets/d/1Gfei9yD_oiPmwHlE5rvWLpFUEupmeBLvqZ6Tz9sfkuc/edit?usp=sharing
 AR00031: https://docs.google.com/spreadsheets/d/1Iozd7Aebj5zyAhDA0rLxAq_vW5QNdN-nD7NxrhOCtoY/edit?usp=sharing
+AR00033: https://docs.google.com/spreadsheets/d/1DR6fpIF78WNZr9FhNL_GRa2Xc5ZOl0_FNTBAdUI_Ipk/edit?gid=0#gid=0
+AR00037: https://docs.google.com/spreadsheets/d/1CEulCtNzC82P6EgqhDNCwmmGNlpOKUJxOlRZpTKoQXQ/edit?gid=0#gid=0
+AR00040: https://docs.google.com/spreadsheets/d/1pedJ4y3I89yzqEqIw9qp3t8-G8YFYcdUHNzwIyUeFhM/edit?gid=0#gid=0
+AR00041: https://docs.google.com/spreadsheets/d/1s_i96_oFl789kYF2ML1dX1LlWgLWDOG2QQsyMFKnJ1Y/edit?gid=0#gid=0
+AR00045: https://docs.google.com/spreadsheets/d/1YrqGTP8kIgyVqcv8kpYlzgpgbW9BUIsJdeFun9UIiPU/edit?gid=0#gid=0
+AR00047: https://docs.google.com/spreadsheets/d/1A8IAlMsU8qnctCN3eOft5LvT9bicouFLZ8YUDKHpXNA/edit?gid=0#gid=0
+AR00048: https://docs.google.com/spreadsheets/d/1dnbjnUMQGl4gXYYXW56RaTVfqhSQdhzi8OnmVc3n1Dc/edit?gid=0#gid=0
+AR00049: https://docs.google.com/spreadsheets/d/1jq5Kxv9CsiPWIO0z5oPmXkKFJxe0E5TCfDPEEjdXxEQ/edit?gid=0#gid=0
+AR00050: https://docs.google.com/spreadsheets/d/1XyDcbHs2Kn4Ic66pp4qEj-GS6QJGkTNEFZCLsFmhyFQ/edit?gid=0#gid=0
+AR00051: https://docs.google.com/spreadsheets/d/1b-aX52iqn66EjzeAkW9-mXw21umtDMqlrOfFU7EUoao/edit?gid=0#gid=0
 """.strip()
 
 DEFAULT_GID = "0"
 COL_CALLDATE = "Call Date"
 COL_DURATION = "Total Duration (Seconds)"
-COL_PRICE = "Price per call"  # per-call cost; preferred source for total cost
+COL_PRICE = "Price Per Call"  # per-call cost (in cents); preferred source for total cost
 COST_PER_MINUTE = 0.22         # fallback rate if COL_PRICE column is missing
 COLUMNS_PER_ROW = 3  # how many agent tables to show side-by-side
 
@@ -72,6 +79,15 @@ BILLING_DAYS = {
     "AR00028": 15,
     "AR00029": 16,
     "AR00031": 27,
+    "AR00033": 7,
+    "AR00037": 22,
+    "AR00040": 10,
+    "AR00041": 8,
+    "AR00045": 12,
+    "AR00047": 24,
+    "AR00049": 29,
+    "AR00050": 29,
+    "AR00051": 4
 }
 
 
@@ -204,10 +220,15 @@ def build_stats(df: pd.DataFrame, period_start: date | None = None,
     df["duration_min"] = df[COL_DURATION] / 60.0
 
     # Cost: prefer the per-call cost column; fall back to minutes * rate.
-    # Column values are in cents — divide by 100 for dollars. Strip "$",
-    # commas, and whitespace so values like "$22" or "22 " parse cleanly.
-    if COL_PRICE in df.columns:
-        cleaned = df[COL_PRICE].astype(str).str.replace(r"[$,\s]", "", regex=True)
+    # The column is matched case-insensitively (sheets use "Price Per Call").
+    # Its values are in CENTS (e.g. 106.07 = $1.06), so divide by 100 for
+    # dollars. Strip "$", commas, and whitespace so "$22" or "22 " parse cleanly.
+    price_col = next(
+        (c for c in df.columns if c.strip().lower() == COL_PRICE.strip().lower()),
+        None,
+    )
+    if price_col is not None:
+        cleaned = df[price_col].astype(str).str.replace(r"[$,\s]", "", regex=True)
         df["cost_usd"] = pd.to_numeric(cleaned, errors="coerce").fillna(0.0) / 100.0
     else:
         df["cost_usd"] = df["duration_min"] * COST_PER_MINUTE
