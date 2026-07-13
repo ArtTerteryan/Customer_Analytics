@@ -12,7 +12,7 @@ Google Sheet on every page load (no caching).
 import calendar
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 import pandas as pd
 import streamlit as st
@@ -173,9 +173,40 @@ def load_sheet_csv(sheet_url: str) -> pd.DataFrame:
     return pd.read_csv(csv_url)
 
 
+def compute_cost_series(df: pd.DataFrame) -> pd.Series:
+    """Per-row cost in USD. Prefers the 'Price Per Call' column (matched
+    case-insensitively; values in CENTS, e.g. 106.07 = $1.06, so divided by
+    100). "$", commas, and whitespace are stripped so "$22" / "22 " parse.
+    Unparseable prices count as 0. Falls back to minutes * COST_PER_MINUTE
+    when the price column is absent."""
+    price_col = next(
+        (c for c in df.columns if c.strip().lower() == COL_PRICE.strip().lower()),
+        None,
+    )
+    if price_col is not None:
+        cleaned = df[price_col].astype(str).str.replace(r"[$,\s]", "", regex=True)
+        return pd.to_numeric(cleaned, errors="coerce").fillna(0.0) / 100.0
+    minutes = pd.to_numeric(df[COL_DURATION], errors="coerce") / 60.0
+    return minutes * COST_PER_MINUTE
+
+
+def last_30d_metrics(df: pd.DataFrame, today: date) -> dict:
+    """Usage over the rolling last-30-day window (today-29 .. today inclusive),
+    independent of any billing period. Expects a cleaned df with a 'call_date'
+    column. Returns {calls, cost, cost_per_call}."""
+    window_start = today - timedelta(days=29)
+    win = df[(df["call_date"] >= window_start) & (df["call_date"] <= today)]
+    calls = int(len(win))
+    if calls == 0:
+        return {"calls": 0, "cost": 0.0, "cost_per_call": 0.0}
+    cost = float(compute_cost_series(win).sum())
+    return {"calls": calls, "cost": cost, "cost_per_call": cost / calls}
+
+
 def build_stats(df: pd.DataFrame, period_start: date | None = None,
                 period_end: date | None = None):
-    """Return (stats_dataframe, projected_period_spend_float)."""
+    """Return (stats_dataframe, projected_period_spend, projected_period_calls,
+    last_30d_dict)."""
     required = [COL_CALLDATE, COL_DURATION]
     missing = [c for c in required if c not in df.columns]
     if missing:
@@ -188,12 +219,16 @@ def build_stats(df: pd.DataFrame, period_start: date | None = None,
     df = df.dropna(subset=["call_dt", COL_DURATION])
     df["call_date"] = df["call_dt"].dt.date
 
+    # Last-30-day usage (rolling window, independent of billing period).
+    # Computed on the full cleaned df BEFORE the billing-period filter below.
+    today = date.today()
+    last30 = last_30d_metrics(df, today)
+
     # Filter to billing period [start, end) if one was provided
     if period_start is not None and period_end is not None:
         df = df[(df["call_date"] >= period_start) & (df["call_date"] < period_end)]
 
     # Determine days_elapsed and period_length for averages/projections
-    today = date.today()
     if period_start is not None and period_end is not None:
         period_length = (period_end - period_start).days
         days_elapsed = max(1, min((today - period_start).days + 1, period_length))
@@ -212,26 +247,18 @@ def build_stats(df: pd.DataFrame, period_start: date | None = None,
                 ("Avg spend/day ($)", 0.0),
                 (f"Projected period calls ({period_length}d)", 0),
                 (f"Projected period spend ({period_length}d) ($)", 0.0),
+                ("Calls (last 30d)", last30["calls"]),
+                ("Total cost 30d ($)", round(last30["cost"], 2)),
+                ("Cost per call 30d ($)", round(last30["cost_per_call"], 2)),
             ],
             columns=["Metric", "Value"],
         )
-        return empty, 0.0, 0
+        return empty, 0.0, 0, last30
 
     df["duration_min"] = df[COL_DURATION] / 60.0
 
-    # Cost: prefer the per-call cost column; fall back to minutes * rate.
-    # The column is matched case-insensitively (sheets use "Price Per Call").
-    # Its values are in CENTS (e.g. 106.07 = $1.06), so divide by 100 for
-    # dollars. Strip "$", commas, and whitespace so "$22" or "22 " parse cleanly.
-    price_col = next(
-        (c for c in df.columns if c.strip().lower() == COL_PRICE.strip().lower()),
-        None,
-    )
-    if price_col is not None:
-        cleaned = df[price_col].astype(str).str.replace(r"[$,\s]", "", regex=True)
-        df["cost_usd"] = pd.to_numeric(cleaned, errors="coerce").fillna(0.0) / 100.0
-    else:
-        df["cost_usd"] = df["duration_min"] * COST_PER_MINUTE
+    # Cost via shared helper (prefers "Price Per Call" in cents, else rate).
+    df["cost_usd"] = compute_cost_series(df)
 
     total_calls = int(len(df))
     total_minutes = float(df["duration_min"].sum())
@@ -253,10 +280,13 @@ def build_stats(df: pd.DataFrame, period_start: date | None = None,
             ("Avg spend/day ($)", round(avg_spend_per_day, 2)),
             (f"Projected period calls ({period_length}d)", projected_period_calls),
             (f"Projected period spend ({period_length}d) ($)", round(projected_period_spend, 2)),
+            ("Calls (last 30d)", last30["calls"]),
+            ("Total cost 30d ($)", round(last30["cost"], 2)),
+            ("Cost per call 30d ($)", round(last30["cost_per_call"], 2)),
         ],
         columns=["Metric", "Value"],
     )
-    return stats, float(projected_period_spend), projected_period_calls
+    return stats, float(projected_period_spend), projected_period_calls, last30
 
 
 def fetch_one(item: dict) -> dict:
@@ -277,15 +307,34 @@ def fetch_one(item: dict) -> dict:
 
     if not url or "docs.google.com/spreadsheets" not in url:
         return {**base, "error": "Missing or invalid URL", "stats": None,
-                "projected_spend": None, "projected_calls": None}
+                "projected_spend": None, "projected_calls": None, "last30": None}
     try:
         df = load_sheet_csv(url)
-        stats, projected_spend, projected_calls = build_stats(df, period_start, period_end)
+        stats, projected_spend, projected_calls, last30 = build_stats(df, period_start, period_end)
         return {**base, "error": None, "stats": stats,
-                "projected_spend": projected_spend, "projected_calls": projected_calls}
+                "projected_spend": projected_spend, "projected_calls": projected_calls,
+                "last30": last30}
     except Exception as e:
         return {**base, "error": str(e), "stats": None,
-                "projected_spend": None, "projected_calls": None}
+                "projected_spend": None, "projected_calls": None, "last30": None}
+
+
+@st.cache_data(ttl=600, show_spinner=False)
+def load_all_results(sheets_text: str, today_iso: str):
+    """Fetch and process every sheet in parallel. Cached for 10 minutes so
+    ordinary reruns (button clicks, scrolling) don't re-download all sheets.
+    Keyed by today_iso so the cache refreshes each day as billing periods
+    shift; the Refresh button clears it for an immediate re-fetch."""
+    items = parse_sheets_text(sheets_text)
+    results = []
+    with ThreadPoolExecutor(max_workers=min(8, len(items))) as ex:
+        futures = [ex.submit(fetch_one, item) for item in items]
+        for fut in as_completed(futures):
+            results.append(fut.result())
+    # Restore original order (parallel fetches return out of order)
+    order = {item["name"]: i for i, item in enumerate(items)}
+    results.sort(key=lambda r: order.get(r["name"], 9999))
+    return results
 
 
 # --------------------------- STREAMLIT UI ---------------------------
@@ -295,26 +344,20 @@ st.title("AI Receptionist — Usage Report")
 top_left, top_right = st.columns([1, 4])
 with top_left:
     if st.button("🔄 Refresh"):
+        st.cache_data.clear()
         st.rerun()
 with top_right:
-    st.caption(f"Loaded: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  ·  fresh fetch on every visit")
+    st.caption(f"Loaded: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  ·  cached 10 min · Refresh to re-fetch")
 
 items = parse_sheets_text(SHEETS_TEXT)
 if not items:
     st.warning("No agents configured. Edit SHEETS_TEXT in app.py.")
     st.stop()
 
-# Fetch every sheet in parallel
+# Fetch every sheet in parallel (cached — only hits Google on first load,
+# after a Refresh, or once the 10-minute TTL expires)
 with st.spinner(f"Fetching data for {len(items)} agents…"):
-    results = []
-    with ThreadPoolExecutor(max_workers=min(8, len(items))) as ex:
-        futures = [ex.submit(fetch_one, item) for item in items]
-        for fut in as_completed(futures):
-            results.append(fut.result())
-
-# Restore original order (parallel fetches return out of order)
-order = {item["name"]: i for i, item in enumerate(items)}
-results.sort(key=lambda r: order.get(r["name"], 9999))
+    results = load_all_results(SHEETS_TEXT, date.today().isoformat())
 
 # Render as a grid
 for row_start in range(0, len(results), COLUMNS_PER_ROW):
@@ -363,6 +406,18 @@ with m2:
         value=f"{avg_calls_per_day_fleet:,.2f}",
         help=f"Sum of projected period calls ({total_projected_calls:,}) ÷ 30",
     )
+
+# Fleet usage over the rolling last 30 days (independent of billing periods)
+have_30 = [r for r in results if r.get("last30") is not None]
+fleet_calls_30 = sum(r["last30"]["calls"] for r in have_30)
+fleet_cost_30 = sum(r["last30"]["cost"] for r in have_30)
+fleet_cpc_30 = (fleet_cost_30 / fleet_calls_30) if fleet_calls_30 else 0.0
+
+st.markdown("#### Last 30 days (fleet)")
+d1, d2, d3 = st.columns(3)
+d1.metric(label="Calls (last 30d)", value=f"{fleet_calls_30:,}")
+d2.metric(label="Total cost (last 30d)", value=f"${fleet_cost_30:,.2f}")
+d3.metric(label="Cost per call (last 30d)", value=f"${fleet_cpc_30:,.2f}")
 
 if n_ok < n_total:
     st.caption(
