@@ -20,7 +20,6 @@ import streamlit as st
 # --------------------------- CONFIG ---------------------------
 SHEETS_TEXT = """
 AR00003: https://docs.google.com/spreadsheets/d/1I6kv2OvpnNSdq4ALyWxh1lCvJ53HrKFJ7IwrZZtblK8/edit?usp=sharing
-AR00005: https://docs.google.com/spreadsheets/d/1wMyTmbYCZQ2_fxCKW_MKIOLXQNrNMoiaPn0DY5qsm5I/edit?usp=sharing
 AR00007: https://docs.google.com/spreadsheets/d/1Y4GGIMTSnrGcprSk0NpOTkhf43ULyPqCIhyVVHhNSak/edit?ouid=101240097193849099161&usp=sheets_home&ths=true
 AR00010: https://docs.google.com/spreadsheets/d/1ZIJvGLH2JJE3Dzgy7k_T5Rq6KZvEFLUws4rjQ5coew4/edit?gid=0#gid=0
 AR00011: https://docs.google.com/spreadsheets/d/1lAEVTw7cCBORKM06rgRe7oQqQpwfOahq9IXWuBZgS0U/edit?usp=sharing
@@ -29,6 +28,7 @@ AR00013 Support: https://docs.google.com/spreadsheets/d/1Hxv21V5wx8inlGofql9xNs8
 AR00013: https://docs.google.com/spreadsheets/d/1sMcmEHvpkkRf7mFJOOOq3DuscKT8aPwDOy9GyQqAoxs/edit?gid=0#gid=0
 AR00015: https://docs.google.com/spreadsheets/d/1zbkf8iV9r2ZZAoSKAsSZh41C50kRXFgVZb3EMj52QLE/edit?usp=sharing
 AR00016: https://docs.google.com/spreadsheets/d/1Rx23fqiUImvmITDHItIkp_3EGJM0deJm5-DJ1bT49Dg/edit?usp=sharing
+AR00018: 
 AR00019: https://docs.google.com/spreadsheets/d/1a7u-NcsVtSS1agNF7K9MTEY3k54sTk9hu0j-Fdru07Y/edit?usp=sharing
 AR00020: https://docs.google.com/spreadsheets/d/1-1UoU_XNyqL0S9BnFGJsiFobUvWvppqj7d-ZnxxcKz4/edit?usp=sharing
 AR00024: https://docs.google.com/spreadsheets/d/1Ckll7Y1zyJngvjQjTwOfR1Amkz5HtgyYWL88i0yOEdo/edit?usp=sharing
@@ -47,6 +47,8 @@ AR00048: https://docs.google.com/spreadsheets/d/1dnbjnUMQGl4gXYYXW56RaTVfqhSQdhz
 AR00049: https://docs.google.com/spreadsheets/d/1jq5Kxv9CsiPWIO0z5oPmXkKFJxe0E5TCfDPEEjdXxEQ/edit?gid=0#gid=0
 AR00050: https://docs.google.com/spreadsheets/d/1XyDcbHs2Kn4Ic66pp4qEj-GS6QJGkTNEFZCLsFmhyFQ/edit?gid=0#gid=0
 AR00051: https://docs.google.com/spreadsheets/d/1b-aX52iqn66EjzeAkW9-mXw21umtDMqlrOfFU7EUoao/edit?gid=0#gid=0
+AR00053: https://docs.google.com/spreadsheets/d/1BNOFBOZcG90uBYzLRU7hYXryi387gUPSJbdo1Z7Mhag/edit?gid=0#gid=0
+AR00054: https://docs.google.com/spreadsheets/d/14tOgnxFi4712F66YLst7XFGDYcElByeOAdBPdV36QmU/edit?gid=0#gid=0
 """.strip()
 
 DEFAULT_GID = "0"
@@ -64,7 +66,6 @@ COLUMNS_PER_ROW = 3  # how many agent tables to show side-by-side
 # "AR00013 " (so AR00013_EST, AR00013 Support, etc. inherit it).
 BILLING_DAYS = {
     "AR00003": 5,
-    "AR00005": 1,
     "AR00007": 10,
     "AR00010": 18,
     "AR00011": 24,
@@ -87,7 +88,9 @@ BILLING_DAYS = {
     "AR00047": 24,
     "AR00049": 29,
     "AR00050": 29,
-    "AR00051": 4
+    "AR00051": 4,
+    "AR00053": 1,
+    "AR00054": 1,
 }
 
 
@@ -378,6 +381,12 @@ for row_start in range(0, len(results), COLUMNS_PER_ROW):
                 if result["url"]:
                     st.caption(result["url"])
             else:
+                l30 = result.get("last30") or {}
+                st.caption(
+                    f"📊 Last 30d: {l30.get('calls', 0):,} calls  ·  "
+                    f"${l30.get('cost', 0.0):,.2f} total  ·  "
+                    f"${l30.get('cost_per_call', 0.0):,.2f}/call"
+                )
                 st.dataframe(
                     result["stats"],
                     hide_index=True,
