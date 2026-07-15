@@ -19,36 +19,33 @@ import streamlit as st
 
 # --------------------------- CONFIG ---------------------------
 SHEETS_TEXT = """
-AR00003: https://docs.google.com/spreadsheets/d/1I6kv2OvpnNSdq4ALyWxh1lCvJ53HrKFJ7IwrZZtblK8/edit?usp=sharing
-AR00007: https://docs.google.com/spreadsheets/d/1Y4GGIMTSnrGcprSk0NpOTkhf43ULyPqCIhyVVHhNSak/edit?ouid=101240097193849099161&usp=sheets_home&ths=true
-AR00010: https://docs.google.com/spreadsheets/d/1ZIJvGLH2JJE3Dzgy7k_T5Rq6KZvEFLUws4rjQ5coew4/edit?gid=0#gid=0
-AR00011: https://docs.google.com/spreadsheets/d/1lAEVTw7cCBORKM06rgRe7oQqQpwfOahq9IXWuBZgS0U/edit?usp=sharing
-AR00012: https://docs.google.com/spreadsheets/d/1wbFDNgSbCiM1Oju-cGBE_JwxrGk7zEqzmgGCokQWaFg/edit?usp=sharing
-AR00013 Support: https://docs.google.com/spreadsheets/d/1Hxv21V5wx8inlGofql9xNs8uaxkTd5u511bWjML--Zk/edit?usp=sharing
-AR00013: https://docs.google.com/spreadsheets/d/1sMcmEHvpkkRf7mFJOOOq3DuscKT8aPwDOy9GyQqAoxs/edit?gid=0#gid=0
-AR00015: https://docs.google.com/spreadsheets/d/1zbkf8iV9r2ZZAoSKAsSZh41C50kRXFgVZb3EMj52QLE/edit?usp=sharing
-AR00016: https://docs.google.com/spreadsheets/d/1Rx23fqiUImvmITDHItIkp_3EGJM0deJm5-DJ1bT49Dg/edit?usp=sharing
-AR00018: 
-AR00019: https://docs.google.com/spreadsheets/d/1a7u-NcsVtSS1agNF7K9MTEY3k54sTk9hu0j-Fdru07Y/edit?usp=sharing
-AR00020: https://docs.google.com/spreadsheets/d/1-1UoU_XNyqL0S9BnFGJsiFobUvWvppqj7d-ZnxxcKz4/edit?usp=sharing
-AR00024: https://docs.google.com/spreadsheets/d/1Ckll7Y1zyJngvjQjTwOfR1Amkz5HtgyYWL88i0yOEdo/edit?usp=sharing
-AR00026: https://docs.google.com/spreadsheets/d/1aX8mISjh-4DAGP82IABsrtBiojJFFyTaQekguvfavGQ/edit?usp=sharing
-AR00028: https://docs.google.com/spreadsheets/d/16wJOdiCuTg0JlIf1qE_nNZgn4QJBBTEvHyOPM3r8Bhc/edit?usp=sharing
-AR00029: https://docs.google.com/spreadsheets/d/1CQCQDoTJjxYNlJjuwqpRHeitTUpgnFIE2cxTIGJrA5A/edit?usp=sharing
-AR00030: https://docs.google.com/spreadsheets/d/1Gfei9yD_oiPmwHlE5rvWLpFUEupmeBLvqZ6Tz9sfkuc/edit?usp=sharing
-AR00031: https://docs.google.com/spreadsheets/d/1Iozd7Aebj5zyAhDA0rLxAq_vW5QNdN-nD7NxrhOCtoY/edit?usp=sharing
-AR00033: https://docs.google.com/spreadsheets/d/1DR6fpIF78WNZr9FhNL_GRa2Xc5ZOl0_FNTBAdUI_Ipk/edit?gid=0#gid=0
-AR00037: https://docs.google.com/spreadsheets/d/1CEulCtNzC82P6EgqhDNCwmmGNlpOKUJxOlRZpTKoQXQ/edit?gid=0#gid=0
-AR00040: https://docs.google.com/spreadsheets/d/1pedJ4y3I89yzqEqIw9qp3t8-G8YFYcdUHNzwIyUeFhM/edit?gid=0#gid=0
-AR00041: https://docs.google.com/spreadsheets/d/1s_i96_oFl789kYF2ML1dX1LlWgLWDOG2QQsyMFKnJ1Y/edit?gid=0#gid=0
-AR00045: https://docs.google.com/spreadsheets/d/1YrqGTP8kIgyVqcv8kpYlzgpgbW9BUIsJdeFun9UIiPU/edit?gid=0#gid=0
-AR00047: https://docs.google.com/spreadsheets/d/1A8IAlMsU8qnctCN3eOft5LvT9bicouFLZ8YUDKHpXNA/edit?gid=0#gid=0
-AR00048: https://docs.google.com/spreadsheets/d/1dnbjnUMQGl4gXYYXW56RaTVfqhSQdhzi8OnmVc3n1Dc/edit?gid=0#gid=0
-AR00049: https://docs.google.com/spreadsheets/d/1jq5Kxv9CsiPWIO0z5oPmXkKFJxe0E5TCfDPEEjdXxEQ/edit?gid=0#gid=0
-AR00050: https://docs.google.com/spreadsheets/d/1XyDcbHs2Kn4Ic66pp4qEj-GS6QJGkTNEFZCLsFmhyFQ/edit?gid=0#gid=0
-AR00051: https://docs.google.com/spreadsheets/d/1b-aX52iqn66EjzeAkW9-mXw21umtDMqlrOfFU7EUoao/edit?gid=0#gid=0
-AR00053: https://docs.google.com/spreadsheets/d/1BNOFBOZcG90uBYzLRU7hYXryi387gUPSJbdo1Z7Mhag/edit?gid=0#gid=0
-AR00054: https://docs.google.com/spreadsheets/d/14tOgnxFi4712F66YLst7XFGDYcElByeOAdBPdV36QmU/edit?gid=0#gid=0
+AR00003 - Service Engineering SB: https://docs.google.com/spreadsheets/d/1I6kv2OvpnNSdq4ALyWxh1lCvJ53HrKFJ7IwrZZtblK8/edit?usp=sharing
+AR00007 - United Technical Services: https://docs.google.com/spreadsheets/d/1Y4GGIMTSnrGcprSk0NpOTkhf43ULyPqCIhyVVHhNSak/edit?ouid=101240097193849099161&usp=sheets_home&ths=true
+AR00010 - AKforse: https://docs.google.com/spreadsheets/d/1ZIJvGLH2JJE3Dzgy7k_T5Rq6KZvEFLUws4rjQ5coew4/edit?gid=0#gid=0
+AR00011 - 3rd Person Appliance Repair: https://docs.google.com/spreadsheets/d/1lAEVTw7cCBORKM06rgRe7oQqQpwfOahq9IXWuBZgS0U/edit?usp=sharing
+AR00012 - ProStar Appliance Repair: https://docs.google.com/spreadsheets/d/1wbFDNgSbCiM1Oju-cGBE_JwxrGk7zEqzmgGCokQWaFg/edit?usp=sharing
+AR00013 Support - Solo Appliance Repair: https://docs.google.com/spreadsheets/d/1Hxv21V5wx8inlGofql9xNs8uaxkTd5u511bWjML--Zk/edit?usp=sharing
+AR00013 - Solo Appliance Repair: https://docs.google.com/spreadsheets/d/1sMcmEHvpkkRf7mFJOOOq3DuscKT8aPwDOy9GyQqAoxs/edit?gid=0#gid=0
+AR00015 - Home Appliance Experts: https://docs.google.com/spreadsheets/d/1zbkf8iV9r2ZZAoSKAsSZh41C50kRXFgVZb3EMj52QLE/edit?usp=sharing
+AR00016 - Pro Appliance Medics: https://docs.google.com/spreadsheets/d/1Rx23fqiUImvmITDHItIkp_3EGJM0deJm5-DJ1bT49Dg/edit?usp=sharing
+ARHM00018 - First Choice Home Repair: https://docs.google.com/spreadsheets/d/1PQh-HbhLHZ0b06Sbi04oXCFJHCMsEMoPx4sEKhNDHqQ/edit?gid=0#gid=0
+AR00019 - American Appliance Repair: https://docs.google.com/spreadsheets/d/1a7u-NcsVtSS1agNF7K9MTEY3k54sTk9hu0j-Fdru07Y/edit?usp=sharing
+AR00024 - Morenos Appliance Repair: https://docs.google.com/spreadsheets/d/1Ckll7Y1zyJngvjQjTwOfR1Amkz5HtgyYWL88i0yOEdo/edit?usp=sharing
+AR00026 - Hydra Appliance Repair: https://docs.google.com/spreadsheets/d/1aX8mISjh-4DAGP82IABsrtBiojJFFyTaQekguvfavGQ/edit?usp=sharing
+AR00029 - Max Appliance Repair: https://docs.google.com/spreadsheets/d/1CQCQDoTJjxYNlJjuwqpRHeitTUpgnFIE2cxTIGJrA5A/edit?usp=sharing
+AR00031 - A+ Appliance Repair: https://docs.google.com/spreadsheets/d/1Iozd7Aebj5zyAhDA0rLxAq_vW5QNdN-nD7NxrhOCtoY/edit?gid=0#gid=0
+AR00033 - Repair Porter: https://docs.google.com/spreadsheets/d/1DR6fpIF78WNZr9FhNL_GRa2Xc5ZOl0_FNTBAdUI_Ipk/edit?gid=0#gid=0
+AR00037 - BMM Appliance Repair: https://docs.google.com/spreadsheets/d/1CEulCtNzC82P6EgqhDNCwmmGNlpOKUJxOlRZpTKoQXQ/edit?gid=0#gid=0
+AR00040 - Restart Appliance Repair: https://docs.google.com/spreadsheets/d/1pedJ4y3I89yzqEqIw9qp3t8-G8YFYcdUHNzwIyUeFhM/edit?gid=0#gid=0
+AR00041 - Restos Appliance Repair: https://docs.google.com/spreadsheets/d/1s_i96_oFl789kYF2ML1dX1LlWgLWDOG2QQsyMFKnJ1Y/edit?gid=0#gid=0
+AR00045 - Northest Georgia Appliance Repair: https://docs.google.com/spreadsheets/d/1YrqGTP8kIgyVqcv8kpYlzgpgbW9BUIsJdeFun9UIiPU/edit?gid=0#gid=0
+AR00047 - IV Appliance Clinic: https://docs.google.com/spreadsheets/d/1A8IAlMsU8qnctCN3eOft5LvT9bicouFLZ8YUDKHpXNA/edit?gid=0#gid=0
+AR00048 - All in One Service: https://docs.google.com/spreadsheets/d/1dnbjnUMQGl4gXYYXW56RaTVfqhSQdhzi8OnmVc3n1Dc/edit?gid=0#gid=0
+AR00049 - Okapi Appliance Repair: https://docs.google.com/spreadsheets/d/1jq5Kxv9CsiPWIO0z5oPmXkKFJxe0E5TCfDPEEjdXxEQ/edit?gid=0#gid=0
+AR00050 - Aplliance Repair Service LLC: https://docs.google.com/spreadsheets/d/1XyDcbHs2Kn4Ic66pp4qEj-GS6QJGkTNEFZCLsFmhyFQ/edit?gid=0#gid=0
+AR00051 - G&R Appliance Repair: https://docs.google.com/spreadsheets/d/1b-aX52iqn66EjzeAkW9-mXw21umtDMqlrOfFU7EUoao/edit?gid=0#gid=0
+AR00053 - Mikhelson Appliance Repair Group: https://docs.google.com/spreadsheets/d/1BNOFBOZcG90uBYzLRU7hYXryi387gUPSJbdo1Z7Mhag/edit?gid=0#gid=0
+AR00054 - ABE Appliance Repair: https://docs.google.com/spreadsheets/d/14tOgnxFi4712F66YLst7XFGDYcElByeOAdBPdV36QmU/edit?gid=0#gid=0
 """.strip()
 
 DEFAULT_GID = "0"
@@ -73,24 +70,36 @@ BILLING_DAYS = {
     "AR00013": 31,
     "AR00015": 26,
     "AR00016": 5,
+    "AR00018": 1,
     "AR00019": 9,
-    "AR00020": 17,
     "AR00024": 3,
-    "AR00026": 9,
-    "AR00028": 15,
+    "AR00026": 15,
     "AR00029": 16,
     "AR00031": 27,
     "AR00033": 7,
     "AR00037": 22,
-    "AR00040": 10,
-    "AR00041": 8,
+    "AR00040": 13,
+    "AR00041": 10,
     "AR00045": 12,
     "AR00047": 24,
+    "AR00048": 1,
     "AR00049": 29,
     "AR00050": 29,
     "AR00051": 4,
     "AR00053": 1,
     "AR00054": 1,
+}
+
+# Flat per-minute billing rate (USD/min) for specific agents. When an agent
+# matches here, its cost is ALWAYS minutes * rate — this overrides any
+# "Price Per Call" column in the sheet AND the global COST_PER_MINUTE fallback.
+# Prefix matching works like BILLING_DAYS ("AR00003" covers "AR00003 - ...").
+PER_MINUTE_OVERRIDE = {
+    "AR00007": 0.10,
+    "AR00013 Support": 0.12,
+    "AR00024": 0.09,
+    "AR00048": 0.125,
+    "AR00054": 0.13,
 }
 
 
@@ -102,6 +111,18 @@ def get_billing_day(name: str):
     for key, day in BILLING_DAYS.items():
         if name.startswith(key + " ") or name.startswith(key + "_"):
             return day
+    return None
+
+
+def get_rate_override(name: str):
+    """Look up an agent's flat per-minute rate (USD/min), or None. Exact match
+    first, then prefix match where the prefix is followed by ' ' or '_'
+    (mirrors get_billing_day)."""
+    if name in PER_MINUTE_OVERRIDE:
+        return PER_MINUTE_OVERRIDE[name]
+    for key, rate in PER_MINUTE_OVERRIDE.items():
+        if name.startswith(key + " ") or name.startswith(key + "_"):
+            return rate
     return None
 
 
@@ -176,12 +197,18 @@ def load_sheet_csv(sheet_url: str) -> pd.DataFrame:
     return pd.read_csv(csv_url)
 
 
-def compute_cost_series(df: pd.DataFrame) -> pd.Series:
-    """Per-row cost in USD. Prefers the 'Price Per Call' column (matched
-    case-insensitively; values in CENTS, e.g. 106.07 = $1.06, so divided by
-    100). "$", commas, and whitespace are stripped so "$22" / "22 " parse.
-    Unparseable prices count as 0. Falls back to minutes * COST_PER_MINUTE
-    when the price column is absent."""
+def compute_cost_series(df: pd.DataFrame, rate_override: float | None = None) -> pd.Series:
+    """Per-row cost in USD.
+
+    If rate_override (USD/min) is given, cost is ALWAYS minutes * rate_override
+    and the 'Price Per Call' column is ignored. Otherwise prefers the
+    'Price Per Call' column (matched case-insensitively; values in CENTS,
+    e.g. 106.07 = $1.06, so divided by 100). "$", commas, and whitespace are
+    stripped so "$22" / "22 " parse. Unparseable prices count as 0. Falls back
+    to minutes * COST_PER_MINUTE when the price column is absent."""
+    if rate_override is not None:
+        minutes = pd.to_numeric(df[COL_DURATION], errors="coerce") / 60.0
+        return (minutes * rate_override).fillna(0.0)
     price_col = next(
         (c for c in df.columns if c.strip().lower() == COL_PRICE.strip().lower()),
         None,
@@ -193,7 +220,7 @@ def compute_cost_series(df: pd.DataFrame) -> pd.Series:
     return minutes * COST_PER_MINUTE
 
 
-def last_30d_metrics(df: pd.DataFrame, today: date) -> dict:
+def last_30d_metrics(df: pd.DataFrame, today: date, rate_override: float | None = None) -> dict:
     """Usage over the rolling last-30-day window (today-29 .. today inclusive),
     independent of any billing period. Expects a cleaned df with a 'call_date'
     column. Returns {calls, cost, cost_per_call}."""
@@ -202,12 +229,12 @@ def last_30d_metrics(df: pd.DataFrame, today: date) -> dict:
     calls = int(len(win))
     if calls == 0:
         return {"calls": 0, "cost": 0.0, "cost_per_call": 0.0}
-    cost = float(compute_cost_series(win).sum())
+    cost = float(compute_cost_series(win, rate_override).sum())
     return {"calls": calls, "cost": cost, "cost_per_call": cost / calls}
 
 
 def build_stats(df: pd.DataFrame, period_start: date | None = None,
-                period_end: date | None = None):
+                period_end: date | None = None, rate_override: float | None = None):
     """Return (stats_dataframe, projected_period_spend, projected_period_calls,
     last_30d_dict)."""
     required = [COL_CALLDATE, COL_DURATION]
@@ -225,7 +252,7 @@ def build_stats(df: pd.DataFrame, period_start: date | None = None,
     # Last-30-day usage (rolling window, independent of billing period).
     # Computed on the full cleaned df BEFORE the billing-period filter below.
     today = date.today()
-    last30 = last_30d_metrics(df, today)
+    last30 = last_30d_metrics(df, today, rate_override)
 
     # Filter to billing period [start, end) if one was provided
     if period_start is not None and period_end is not None:
@@ -260,8 +287,9 @@ def build_stats(df: pd.DataFrame, period_start: date | None = None,
 
     df["duration_min"] = df[COL_DURATION] / 60.0
 
-    # Cost via shared helper (prefers "Price Per Call" in cents, else rate).
-    df["cost_usd"] = compute_cost_series(df)
+    # Cost via shared helper (rate_override forces minutes*rate; else prefers
+    # "Price Per Call" in cents, else the COST_PER_MINUTE fallback).
+    df["cost_usd"] = compute_cost_series(df, rate_override)
 
     total_calls = int(len(df))
     total_minutes = float(df["duration_min"].sum())
@@ -297,6 +325,7 @@ def fetch_one(item: dict) -> dict:
     url = item["url"]
 
     billing_day = get_billing_day(name)
+    rate_override = get_rate_override(name)
     if billing_day is not None:
         period_start, period_end = get_billing_period(billing_day)
     else:
@@ -305,6 +334,7 @@ def fetch_one(item: dict) -> dict:
     base = {
         "name": name, "url": url,
         "billing_day": billing_day,
+        "rate_override": rate_override,
         "period_start": period_start, "period_end": period_end,
     }
 
@@ -313,7 +343,7 @@ def fetch_one(item: dict) -> dict:
                 "projected_spend": None, "projected_calls": None, "last30": None}
     try:
         df = load_sheet_csv(url)
-        stats, projected_spend, projected_calls, last30 = build_stats(df, period_start, period_end)
+        stats, projected_spend, projected_calls, last30 = build_stats(df, period_start, period_end, rate_override)
         return {**base, "error": None, "stats": stats,
                 "projected_spend": projected_spend, "projected_calls": projected_calls,
                 "last30": last30}
@@ -375,6 +405,9 @@ for row_start in range(0, len(results), COLUMNS_PER_ROW):
                 st.caption(f"📅 {ps} → {pe}  ·  day {result['billing_day']}")
             else:
                 st.caption("⚠️ No billing day configured — showing all data")
+
+            # if result.get("rate_override") is not None:
+            #     st.caption(f"💵 Flat rate: ${result['rate_override']:.2f}/min (overrides sheet price)")
 
             if result["error"]:
                 st.error(result["error"])
